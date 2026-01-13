@@ -30,4 +30,4 @@ jobs:
           docker rm java-app || true
 
       - name: Run container on localhost
-        run: docker run -d -p 8080:8130 --name java-app java-docker-app:latest
+        run: docker run -d -p 9090:8130 --name java-app java-docker-app:latest
