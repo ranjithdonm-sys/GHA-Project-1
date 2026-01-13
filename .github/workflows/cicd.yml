@@ -1,0 +1,33 @@
+name: build-push-deploy
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  build_push_deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        run: mvn -B package
+
+      - name: Build Docker image
+        run: docker build -t java-docker-app:latest .
+
+      - name: Stop old container
+        run: |
+          docker stop java-app || true
+          docker rm java-app || true
+
+      - name: Run container on localhost
+        run: docker run -d -p 8080:8080 --name java-app java-docker-app:latest
