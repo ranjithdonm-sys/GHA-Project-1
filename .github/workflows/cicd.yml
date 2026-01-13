@@ -5,7 +5,7 @@ on:
     branches: ["master"]
 
 jobs:
-  build_push_deploy:
+  build_push_deploy: 
     runs-on: self-hosted
 
     steps:
